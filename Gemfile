@@ -66,3 +66,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # for if-then-planning app
 gem 'foreman'
 gem 'haml-rails'
+gem 'google-api-client'

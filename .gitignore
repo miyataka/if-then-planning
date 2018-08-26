@@ -40,3 +40,5 @@ yarn-debug.log*
 *credentials.json
 **/*secret.json
 **/*credentials.json
+/token.yaml
+
