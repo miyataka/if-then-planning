@@ -1,24 +1,25 @@
 # README
+- for my own if-then-planning [WIP]
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## feature work
+- make some page
+- google calendar integration
+    - create event
+    - reminder and notifications
+    - recurring event
+    - synchronize resources efficiently
+    - get push notifications
+    - get versioned resources
+    - extended properties
+    - pagination
+    - batch requests
+    - improve performance
+    - handle api erros
+- user authentication for my own app
+- make drawer for todo memorandom
+- drug and drop
+- switch display depends your if-then-type.
+    - time-base if-then-planning
+        - when you make todo, if(when) is required.
+    - obstacle-base if-then-planning
+        - when you make todo, if(any obstacle occur...) is required.
