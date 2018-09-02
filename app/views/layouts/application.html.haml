@@ -7,5 +7,8 @@
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:rel => "stylesheet", :href => "//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons"}
+    %link{:rel => "stylesheet", :href => "https://unpkg.com/vue-material@beta/dist/vue-material.min.css"}
+    %link{:rel => "stylesheet", :href => "https://unpkg.com/vue-material@beta/dist/theme/default.css"}
   %body
     = yield
