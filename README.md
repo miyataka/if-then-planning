@@ -19,7 +19,7 @@
 - make drawer for todo memorandom
 - drug and drop
 - switch display depends your if-then-type.
-    - time-base if-then-planning
-        - when you make todo, if(when) is required.
+    - trigger-base if-then-planning
+        - when you make todo, if(when, where) is required.
     - obstacle-base if-then-planning
         - when you make todo, if(any obstacle occur...) is required.
