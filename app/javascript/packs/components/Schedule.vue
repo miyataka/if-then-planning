@@ -6,15 +6,32 @@
             </div>
             <div class="time-block"></div>
         </div>
+        <md-button @click="fetchEvents"><md-icon>add</md-icon></md-button>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'schedule',
     data: function () {
         return {
-            hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+            hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+            eventList: []
+        }
+    },
+    methods: {
+        fetchEvents: function() {
+            axios.get('/api/v1/event')
+                .then((response) => {
+                    for(var i = 0; i < response.data.events.length; i++) {
+                        //this.eventList.push(response.data.events[i]);
+                        console.log(response.data.events[i]);
+                    }
+                }, (error) => {
+                    console.log(error);
+                });
         }
     }
 }

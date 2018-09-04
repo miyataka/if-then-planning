@@ -5,8 +5,8 @@ require 'fileutils'
 
 OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 APPLICATION_NAME = 'Google Calendar API Ruby Quickstart'.freeze
-CREDENTIALS_PATH = '../../client_secret.json'.freeze
-TOKEN_PATH = '../../token.yaml'.freeze
+CREDENTIALS_PATH = 'client_secret.json'.freeze
+TOKEN_PATH = 'token.yaml'.freeze
 SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
 
 module GoogleCalendarAuthorize
@@ -32,8 +32,17 @@ module GoogleCalendarAuthorize
     end
 
     def initialize
-        service = Google::Apis::CalendarV3::CalendarService.new
-        service.client_options.application_name = APPLICATION_NAME
-        service.authorization = authorize
+        @service = Google::Apis::CalendarV3::CalendarService.new
+        @service.client_options.application_name = APPLICATION_NAME
+        @service.authorization = authorize
+    end
+
+    def fetchEvents
+        calendar_id = 'primary'
+        @service.list_events(calendar_id,
+                            max_results: 10,
+                            single_events: true,
+                            order_by: 'startTime',
+                            time_min: Time.now.iso8601)
     end
 end
