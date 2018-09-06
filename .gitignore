@@ -42,3 +42,7 @@ yarn-debug.log*
 **/*credentials.json
 /token.yaml
 
+# Ignore gtags
+GPATH
+GRTAGS
+GTAGS
