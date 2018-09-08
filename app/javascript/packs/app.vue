@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import schedule from './components/Schedule.vue'
+import Schedule from './components/Schedule.vue'
 import TaskView from './components/TaskView.vue'
 import ObstacleView from './components/ObstacleView.vue'
 
@@ -22,7 +22,7 @@ export default {
     }
   },
   components: {
-    schedule,
+    Schedule,
     TaskView,
     ObstacleView
   }

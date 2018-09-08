@@ -1,9 +1,11 @@
 <template>
   <div class="table">
       <md-table v-model="filteredData" md-sort="due" md-sort-order="asc">
+          <!--
           <md-table-toolbar>
               <h1 class="md-title">ToDos</h1>
           </md-table-toolbar>
+          -->
           <tr class="md-table-head">
               <th clsss="md-table-head" v-for="key in columns"
                                         v-on:click="sortBy(key)"
