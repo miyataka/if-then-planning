@@ -4,7 +4,7 @@
 ## feature work
 - [ ] make some page
 - [ ] google calendar integration
-    - [ ] create event
+    - [x] create event
     - [ ] reminder and notifications
     - [ ] recurring event
     - [ ] synchronize resources efficiently
@@ -14,7 +14,7 @@
     - [ ] pagination
     - [ ] batch requests
     - [ ] improve performance
-    - [ ] handle api erros
+    - [ ] handle api errors
 - [ ] user authentication for my own app
 - [ ] make drawer for todo memorandom
 - [ ] drug and drop
