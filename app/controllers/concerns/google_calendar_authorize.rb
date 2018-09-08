@@ -7,7 +7,8 @@ OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'.freeze
 APPLICATION_NAME = 'Google Calendar API Ruby Quickstart'.freeze
 CREDENTIALS_PATH = 'client_secret.json'.freeze
 TOKEN_PATH = 'token.yaml'.freeze
-SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
+#SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR_READONLY
+SCOPE = Google::Apis::CalendarV3::AUTH_CALENDAR
 
 module GoogleCalendarAuthorize
     extend ActiveSupport::Concern
@@ -44,5 +45,38 @@ module GoogleCalendarAuthorize
                             single_events: true,
                             order_by: 'startTime',
                             time_min: Time.now.iso8601)
+    end
+
+    def createEvent( args )
+        calendar_id = 'primary'
+        _summary = args[:summary]
+        #_start = args[:start]
+        _start = Date.today.to_date.to_s[0..9]
+        #_end = args[:end]
+        _end = Date.today.to_date.to_s[0..9]
+
+        event = Google::Apis::CalendarV3::Event.new(
+            summary: _summary,
+            #description: 'A chance to hear more about Google\'s developer products.',
+            start: {
+                date: _start,
+                #date_time: _start,
+                #time_zone: 'Asia/Tokyo',
+            },
+            end: {
+                date: _end,
+                #date_time: _end,
+                #time_zone: 'Asia/Tokyo',
+            },
+            #reminders: {
+            #  use_default: false,
+            #  overrides: [
+            #    {method' => 'email', 'minutes: 24 * 60},
+            #    {method' => 'popup', 'minutes: 10},
+            #  ],
+            #},
+        )
+
+        @service.insert_event(calendar_id, event)
     end
 end
