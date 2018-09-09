@@ -16,7 +16,12 @@
                 <div class="time-label">
                     <span>{{ (hour - 1) > 9 ? (hour - 1) : "0" + (hour - 1)}}{{ ":00" }}</span>
                 </div>
-                <div class="time-block"></div>
+                <div class="time-block">
+                    <div class="event md-accent"
+                         v-if="todayEventsList.get(String(hour - 1))"
+                         v-bind:style="todayEventsList.get(String(hour - 1))">
+                    </div>
+                </div>
             </b-row>
         </div>
     </section>
@@ -59,14 +64,38 @@ export default {
         this.fetchEvents();
     },
     computed: {
-        todayEvent: function() {
+        todayEvents: function() {
             let today = new Date;
             let ymd = today.toISOString().substr(0,10);
             let data = this.eventList
             data = data.filter(function(obj) {
                 return obj.start.date_time.indexOf(ymd) > -1;
             })
+            data = data.slice().sort(function(a, b) {
+                return (a.start.date_time == b.start.date_time ? 0 : a.start.date_time > b.start.date_time ? 1 : -1)
+            })
             return data;
+        },
+        todayEventsList: function () {
+            let te = this.todayEvents;
+            let te_list = new Array(24);
+            let te_list2 = new Map();
+            let style_string = 'width: 90%; ' +
+                               'z-index: 1; ' +
+                               'background-color: red; ' +
+                               'height: 90%;' +
+                               '';
+
+            te_list = te.slice().sort(function(a, b) {
+                return (a.start.date_time == b.start.date_time ? 0 : a.start.date_time > b.start.date_time ? 1 : -1)
+            })
+
+            te_list.forEach(function(obj) {
+                te_list2.set(obj.start.date_time.substring(11,13),
+                             style_string + "top: " + (obj.start.date_time.substring(11,13) * 40) + 'px;');
+            })
+
+            return te_list2;
         },
         today_ymd: function() {
             let now = new Date();
