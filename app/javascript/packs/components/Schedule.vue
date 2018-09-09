@@ -1,19 +1,25 @@
 <template>
-    <div id="schedule">
-        <div class="hour scale" v-for="hour in hours">
-            <div class="time-label">
-                <span>{{ hour > 9 ? hour : "0" + hour }}{{ ":00" }}</span>
-            </div>
-            <div class="time-block"></div>
+    <section id="schedule">
+        <b-row id="schedule-header" class="sticky-header">
+            <b-col cols="9">{{ today_ymd }}</b-col>
+            <b-col cols="3">
+                <md-button class="md-fab md-mini md-primary" @click="fetchEvents">
+                    <md-icon>refresh</md-icon>
+                </md-button>
+                <md-button type="submit" @click="createEvent" class="md-accent md-fab md-mini">
+                    <md-icon>add</md-icon>
+                </md-button>
+            </b-col>
+        </b-row>
+        <div id="schedule-body">
+            <b-row class="hour scale" v-for="hour in 24">
+                <div class="time-label">
+                    <span>{{ (hour - 1) > 9 ? (hour - 1) : "0" + (hour - 1)}}{{ ":00" }}</span>
+                </div>
+                <div class="time-block"></div>
+            </b-row>
         </div>
-        <md-button class="md-fab md-mini md-primary" @click="fetchEvents"><md-icon>refresh</md-icon></md-button>
-        <md-field class="md-layout-item">
-            <md-input v-model="eventSummary"></md-input>
-            <md-input v-model="eventStart"></md-input>
-            <md-input v-model="eventEnd"></md-input>
-            <md-button type="submit" @click="createEvent" class="md-accent md-fab md-mini"><md-icon>add</md-icon></md-button>
-        </md-field>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -23,7 +29,6 @@ export default {
     name: 'schedule',
     data: function () {
         return {
-            hours: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
             eventList: [],
             eventSummary: '',
             eventStart: '',
@@ -62,15 +67,40 @@ export default {
                 return obj.start.date_time.indexOf(ymd) > -1;
             })
             return data;
+        },
+        today_ymd: function() {
+            let now = new Date();
+            let y = now.getFullYear();
+            let m = now.getMonth();
+            let d = now.getDate();
+            if (m < 10) {
+                m = '0' + m;
+            }
+            return y + '-' + m + '-' + d
         }
     },
 }
 </script>
 
 <style scoped>
-.hour {
+div#schedule-body {
+    height: 500px;
+    overflow: scroll;
+    resize: both;
+    padding-top: 10px;
+}
+div#schedule-header {
+    zindex: 1;
     height: 40px;
-    /*width: 40px;*/
+}
+div#schedule-header .md-fab {
+    /*
+    display: inline-block;
+        */
+}
+.hour.scale {
+    position: relative;
+    height: 40px;
     border-right: 1px solid #e0e0e0;
     margin: 0px 0px 0px 0px;
 }

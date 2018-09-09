@@ -1,13 +1,23 @@
 <template>
-    <div id="app">
-        <p><strong>{{ message }}</strong></p>
-      <div id="" class="md-layout">
-          <schedule class="md-layout-item"/>
-          <task-view class="md-layout-item"/>
-          <obstacle-view class="md-layout-item"/>
-      </div>
-    <router-view></router-view>
-  </div>
+    <div id="app" class="container">
+        <b-row>
+            <b-col>
+                <p><strong>{{ message }}</strong></p>
+            </b-col>
+        </b-row>
+        <b-row no-gutters>
+            <b-col cols="8">
+                <schedule/>
+            </b-col>
+            <b-col>
+                <task-view/>
+            </b-col>
+            <b-col>
+                <obstacle-view/>
+                <router-view></router-view>
+            </b-col>
+        </b-row>
+    </div>
 </template>
 
 <script>
@@ -30,26 +40,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~vue-material/dist/theme/engine"; // Import the theme engine
-
-@include md-register-theme("default", (
-  primary: md-get-palette-color(deeporange, A200), // The primary color of your application
-  accent: md-get-palette-color(yellow, A200) // The accent or secondary color
-));
-@import "~vue-material/dist/theme/all"; // Apply the theme
-
-#schedule {
-    height: 300px;
-    overflow: scroll;
-    resize: both;
-}
-
 #TaskView {
-    height: 300px;
+    height: 500px;
     overflow: scroll;
     resize: both;
 }
-p {
+p strong {
   font-size: 2em;
   text-align: center;
 }
