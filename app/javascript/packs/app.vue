@@ -40,11 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#TaskView {
-    height: 500px;
-    overflow: scroll;
-    resize: both;
-}
 p strong {
   font-size: 2em;
   text-align: center;
