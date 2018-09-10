@@ -6,10 +6,10 @@
             </b-col>
         </b-row>
         <b-row no-gutters>
-            <b-col cols="8">
+            <b-col cols="6">
                 <schedule/>
             </b-col>
-            <b-col>
+            <b-col cols="6">
                 <task-view/>
             </b-col>
             <b-col>

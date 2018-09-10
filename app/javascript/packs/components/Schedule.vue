@@ -1,8 +1,8 @@
 <template>
     <section id="schedule">
         <b-row id="schedule-header" class="sticky-header">
-            <b-col cols="9">{{ today_ymd }}</b-col>
-            <b-col cols="3">
+            <b-col cols="8">{{ today_ymd }}</b-col>
+            <b-col cols="4">
                 <md-button class="md-fab md-mini md-primary" @click="fetchEvents">
                     <md-icon>refresh</md-icon>
                 </md-button>
@@ -123,9 +123,7 @@ div#schedule-header {
     height: 40px;
 }
 div#schedule-header .md-fab {
-    /*
-    display: inline-block;
-        */
+    display: flex-end;
 }
 .hour.scale {
     position: relative;
