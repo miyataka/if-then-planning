@@ -3,6 +3,10 @@
 
 ## feature work
 - [ ] make some page
+    - [ ] calendar-view
+    - [ ] task-view
+    - [ ] trigger-view
+    - [ ] obstacle-view
 - [ ] google calendar integration
     - [x] create event
     - [ ] reminder and notifications
