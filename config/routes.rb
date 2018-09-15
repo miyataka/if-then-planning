@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     namespace :api do
         namespace :v1, format: 'json' do
             resources :event, only: [:index, :create]
+            resources :tasks, only: [:index, :create, :update, :destory]
         end
     end
 end
