@@ -45,36 +45,7 @@ export default {
             searchQuery: '',
             newTask: '',
             gridColumns: ['is_done', 'name', 'due'],
-            taskList: [ //TODO fetch from DB
-                /*
-                { name: 'Sample Task1', is_done: false,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
-                */
-            ]
+            taskList: [],
         }
     },
     methods: {
