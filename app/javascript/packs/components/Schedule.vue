@@ -20,6 +20,10 @@
                     <div class="event md-accent"
                          v-if="todayEventsList.get(String(hour - 1))"
                          v-bind:style="todayEventsList.get(String(hour - 1))">
+                        <span v-if="todayEventsList.get(String(hour - 1) + '_task')"
+                              v-bind:style="todayEventsList.get(String(hour - 1) + '_task_style')">
+                            {{ todayEventsList.get(String(hour - 1) + '_task') }}
+                        </span>
                     </div>
                 </div>
             </b-row>
@@ -88,8 +92,12 @@ export default {
             let style_string = 'width: 90%; ' +
                                'z-index: 1; ' +
                                'background-color: red; ' +
-                               'height: 90%;' +
+                               'height: 90%; ' +
                                '';
+            let span_style_string = 'color: white; ' +
+                                    'background: inherit; ' +
+                                    'left: 3px; ' +
+                                    'top: auto;' ;
 
             te_list = te.slice().sort(function(a, b) {
                 return (a.start.date_time == b.start.date_time ? 0 : a.start.date_time > b.start.date_time ? 1 : -1)
@@ -98,6 +106,10 @@ export default {
             te_list.forEach(function(obj) {
                 te_list2.set(obj.start.date_time.substring(11,13),
                              style_string + "top: " + (obj.start.date_time.substring(11,13) * 40) + 'px;');
+                te_list2.set(obj.start.date_time.substring(11,13) + "_task",
+                             obj.summary);
+                te_list2.set(obj.start.date_time.substring(11,13) + "_task_style",
+                             span_style_string);
             })
 
             return te_list2;
