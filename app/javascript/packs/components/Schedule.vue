@@ -69,7 +69,12 @@ export default {
             let ymd = today.toISOString().substr(0,10);
             let data = this.eventList
             data = data.filter(function(obj) {
-                return obj.start.date_time.indexOf(ymd) > -1;
+                if("date_time" in obj.start){
+                    return obj.start.date_time.indexOf(ymd) > -1;
+                }else if("date" in obj.start){
+                    return obj.start.date.indexOf(ymd) > -1;
+                }
+                return false;
             })
             data = data.slice().sort(function(a, b) {
                 return (a.start.date_time == b.start.date_time ? 0 : a.start.date_time > b.start.date_time ? 1 : -1)

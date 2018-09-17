@@ -41,10 +41,11 @@ module GoogleCalendarAuthorize
     def fetchEvents
         calendar_id = 'primary'
         @service.list_events(calendar_id,
-                            max_results: 10,
-                            single_events: true,
-                            order_by: 'startTime',
-                            time_min: Time.now.iso8601)
+                            #max_results: 10,
+                            #single_events: true,
+                            #order_by: 'startTime',
+                            time_min: Time.now.ago(1.month).iso8601,
+                            time_max: Time.now.since(1.month).iso8601)
     end
 
     def createEvent( args )
