@@ -1,8 +1,26 @@
 <template>
     <div id="TaskView">
         <b-row id="taskview-header">
-            <b-col style="height: 40px; position: fixed;">
+            <b-col cols="8" style="height: 40px;">
                 TaskView
+            </b-col>
+            <b-col cols="4">
+                <md-button class="md-fab md-mini md-primary" @click="fetchTasks">
+                    <md-icon>refresh</md-icon>
+                </md-button>
+                <md-button type="submit" @click="toggleAddTaskView" class="md-accent md-fab md-mini">
+                    <md-icon>add</md-icon>
+                </md-button>
+                <div class="addTaskView" v-show="addTaskViewVisible">
+                    <form>
+                        <input type="text" v-model="addTaskName" placeholder="taskname..." />
+                        <input type="text" v-model="addTaskDue" placeholder="taskdue..." />
+                        <md-button class="md-mini md-icon-button md-raised md-primary"
+                            @click="createTask">
+                            <md-icon>edit</md-icon>
+                        </md-button>
+                    </form>
+                </div>
             </b-col>
         </b-row>
         <div id="taskview-body">
@@ -43,9 +61,11 @@ export default {
             showSearchBox: false,
             showCreateBox: false,
             searchQuery: '',
-            newTask: '',
             gridColumns: ['is_done', 'name', 'due'],
             taskList: [],
+            addTaskViewVisible: false,
+            addTaskName: '',
+            addTaskDue: '',
         }
     },
     methods: {
@@ -58,6 +78,20 @@ export default {
                 }, (error) => {
                     console.log(error);
                 });
+        },
+        createTask: function() {
+            if (!this.addTaskName || !this.addTaskDue) return;
+            axios.post('/api/v1/tasks', { task: { name: this.addTaskName, due: this.addTaskDue }})
+                .then((response) => {
+                    this.taskList.unshift(response.data.task);
+                    this.addTaskName = '';
+                    this.addTaskDue = '';
+                }, (error) => {
+                    console.log(error)
+                });
+        },
+        toggleAddTaskView: function() {
+            this.addTaskViewVisible = !this.addTaskViewVisible
         }
     },
     mounted: function() {
@@ -78,7 +112,20 @@ div#taskview-header {
     zindex: 1;
     height: 40px;
 }
+div#taskview-header .md-fab {
+    display: flex-end;
+}
 .due-col {
     display: inline-flex;
+}
+
+div.addTaskView {
+    display: inline-flex;
+    width: auto;
+    border: #e3e3e3 1px solid;
+    position: relative;
+    z-index: 3;
+    background: white;
+    color: black;
 }
 </style>

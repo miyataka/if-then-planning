@@ -139,9 +139,6 @@ div#schedule-header {
     zindex: 1;
     height: 40px;
 }
-div#schedule-header .md-fab {
-    display: flex-end;
-}
 .hour.scale {
     position: relative;
     height: 40px;
