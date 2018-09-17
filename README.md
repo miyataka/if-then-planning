@@ -3,8 +3,8 @@
 
 ## feature work
 - [ ] make some page
-    - [ ] calendar-view
-    - [ ] task-view
+    - [x] calendar-view
+    - [x] task-view
     - [ ] trigger-view
     - [ ] obstacle-view
 - [ ] google calendar integration
@@ -19,6 +19,11 @@
     - [ ] batch requests
     - [ ] improve performance
     - [ ] handle api errors
+- [ ] internal api
+    - [x] read task
+    - [x] create task
+    - [ ] update task
+    - [ ] delete task
 - [ ] user authentication for my own app
 - [ ] make drawer for todo memorandom
 - [ ] drug and drop
