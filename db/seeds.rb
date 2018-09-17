@@ -6,9 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-3.times { |i|
-    Task.create({ summary: "sample-task",
+20.times { |i|
+    Task.create({ name: "sample-task#{i}",
                   calendar_id: "primary",
+                  is_done: rand() > 0.5 ? false : true,
+                  due: Time.now(),
                   order: i,
                   event_id: "some_random" })
 }

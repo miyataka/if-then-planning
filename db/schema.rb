@@ -14,7 +14,9 @@ ActiveRecord::Schema.define(version: 2018_09_15_084512) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "calendar_id"
-    t.string "summary"
+    t.string "name"
+    t.boolean "is_done", null: false, default: false
+    t.datetime "due"
     t.integer "order"
     t.string "event_id"
     t.datetime "created_at", null: false

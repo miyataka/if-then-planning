@@ -6,7 +6,7 @@
             </b-col>
         </b-row>
         <div id="taskview-body">
-        <b-row v-for="task in gridData" style="vertical-align: middle;">
+        <b-row v-for="task in taskList" style="vertical-align: middle;">
             <b-col cols="1" style="align-items: center;">
                 <md-icon class="text-primary" v-if="!task.is_done">check_box_outline_blank</md-icon>
                 <md-icon class="text-primary" v-else>check_box</md-icon>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     name: 'TaskView',
     data: function () {
@@ -43,7 +45,8 @@ export default {
             searchQuery: '',
             newTask: '',
             gridColumns: ['is_done', 'name', 'due'],
-            gridData: [ //TODO fetch from DB
+            taskList: [ //TODO fetch from DB
+                /*
                 { name: 'Sample Task1', is_done: false,     due: "2018/08/19"},
                 { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
                 { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
@@ -70,8 +73,24 @@ export default {
                 { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
                 { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
                 { name: 'Sample Task2', is_done: true,     due: "2018/08/19"},
+                */
             ]
         }
+    },
+    methods: {
+        fetchTasks: function() {
+            axios.get('/api/v1/tasks')
+                .then((response) => {
+                    for(let i = 0; i < response.data.length; i++) {
+                        this.taskList.push(response.data[i]);
+                    }
+                }, (error) => {
+                    console.log(error);
+                });
+        }
+    },
+    mounted: function() {
+        this.fetchTasks();
     },
 }
 </script>
