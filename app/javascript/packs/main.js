@@ -6,7 +6,7 @@ import store from './store/store'
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'     // doesn't work
-import 'vue-material/dist/theme/default-dark.css'   // doesn't work
+import 'vue-material/dist/theme/default.css'   // doesn't work
 Vue.use(VueMaterial)
 
 import BootstrapVue from 'bootstrap-vue'

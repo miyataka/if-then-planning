@@ -36,7 +36,7 @@ import axios from 'axios'
 
 export default {
     name: 'schedule',
-    data: function () {
+    data () {
         return {
             eventList: [],
             eventSummary: '',

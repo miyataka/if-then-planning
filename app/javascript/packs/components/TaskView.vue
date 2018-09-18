@@ -1,8 +1,32 @@
 <template>
     <div id="TaskView">
         <b-row id="taskview-header">
-            <b-col cols="8" style="height: 40px;">
+            <b-col cols="6">
                 TaskView
+            </b-col>
+            <b-col cols="2">
+                <md-menu md-align-trigger>
+                    <md-button md-menu-trigger class="md-icon-button md-small md-primary">
+                        <md-icon>filter_list</md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button @click="doFilter('complete')">
+                                Complete-task
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button @click="doFilter('incomplete')">
+                                Incomplete-task
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button @click="doFilter('')">
+                                All
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </b-col>
             <b-col cols="4">
                 <md-button class="md-fab md-mini md-primary" @click="fetchTasks">
@@ -24,7 +48,7 @@
             </b-col>
         </b-row>
         <div id="taskview-body">
-        <b-row v-for="task in taskList" style="vertical-align: middle;">
+        <b-row v-for="task in filteredTask" style="vertical-align: middle;">
             <b-col cols="1" style="align-items: center;">
                 <md-icon class="text-primary" v-if="!task.is_done">check_box_outline_blank</md-icon>
                 <md-icon class="text-primary" v-else>check_box</md-icon>
@@ -56,16 +80,14 @@ import axios from 'axios'
 
 export default {
     name: 'TaskView',
-    data: function () {
+    data () {
         return {
-            showSearchBox: false,
-            showCreateBox: false,
-            searchQuery: '',
             gridColumns: ['is_done', 'name', 'due'],
             taskList: [],
             addTaskViewVisible: false,
             addTaskName: '',
             addTaskDue: '',
+            filterkey: '',
         }
     },
     methods: {
@@ -92,10 +114,27 @@ export default {
         },
         toggleAddTaskView: function() {
             this.addTaskViewVisible = !this.addTaskViewVisible
-        }
+        },
+        doFilter: function(keyword) {
+            this.filterkey = keyword;
+        },
     },
     mounted: function() {
         this.fetchTasks();
+    },
+    computed: {
+        filteredTask: function() {
+            let key = this.filterkey
+            let list = this.taskList
+            if(key == "complete") {
+                list = list.filter(function (task) { return task.is_done; })
+            } else if (key == "incomplete") {
+                list = list.filter(function (task) { return !task.is_done; })
+            } else {
+                // no filter
+            }
+            return list;
+        }
     },
 }
 </script>
