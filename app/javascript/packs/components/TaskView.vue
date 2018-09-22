@@ -133,16 +133,6 @@ export default {
                 }, (error) => {
                     console.log(error);
                 });
-            /*
-            axios.post(url, { task: { name: this.addTaskName, due: this.addTaskDue }})
-                .then((response) => {
-                    this.taskList.unshift(response.data.task);
-                    this.addTaskName = '';
-                    this.addTaskDue = '';
-                }, (error) => {
-                    console.log(error)
-                });
-            */
         },
         toggleAddTaskView: function() {
             this.addTaskViewVisible = !this.addTaskViewVisible
