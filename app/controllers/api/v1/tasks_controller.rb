@@ -2,9 +2,10 @@ class Api::V1::TasksController < ApplicationController
 
     # GET /api/v1/tasks
     def index
-        @task = Task.order('updated_at DESC')
+        @tasks = Task.order('updated_at DESC')
 
-        render json: @task, status: :ok
+        render json: @tasks, status: :ok
+        #render :index, status: :ok
     end
 
     # POST /api/v1/tasks
@@ -20,7 +21,17 @@ class Api::V1::TasksController < ApplicationController
 
     # PUT/PATCH /api/v1/tasks/[:id]
     def update
-        # TODO
+        @task = Task.find_by(id: task_params[:id])
+
+        @task.name = task_params[:name]
+        @task.due = task_params[:due]
+        @task.is_done = task_params[:is_done]
+
+        if @task.save
+            render :show, status: :ok
+        else
+            render json: @task.error, status: :unprocessable_entity
+        end
     end
 
     # DELETE /api/v1/tasks/[:id]
@@ -31,7 +42,13 @@ class Api::V1::TasksController < ApplicationController
     private
         def task_params
             params.fetch(:task, {}).permit(
-                :name, :calendar_id, :order, :event_id, :due, :is_done
+                :id, :name, :calendar_id, :order, :event_id, :due, :is_done
+            )
+        end
+
+        def update_params
+            params.fetch(:task, {}).permit(
+                :id, :name, :calendar_id, :order, :event_id, :due, :is_done
             )
         end
 end
