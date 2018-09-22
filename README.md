@@ -22,7 +22,7 @@
 - [ ] internal api
     - [x] read task
     - [x] create task
-    - [ ] update task
+    - [x] update task
     - [ ] delete task
 - [ ] user authentication for my own app
 - [ ] make drawer for todo memorandom
