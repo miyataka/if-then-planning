@@ -49,7 +49,7 @@
         </b-row>
         <div id="taskview-body">
         <b-row :id="computedTaskId(task.id)" v-for="task in filteredTask" style="vertical-align: middle;">
-            <b-col cols="1" style="align-items: center;" v-model="task.is_done">
+            <b-col cols="1" style="align-items: center;" v-model="task.is_done" @click="toggleTaskStatus(task.id)">
                 <md-icon class="text-primary" v-if="!task.is_done">check_box_outline_blank</md-icon>
                 <md-icon class="text-primary" v-else>check_box</md-icon>
             </b-col>
@@ -137,8 +137,10 @@ export default {
         toggleAddTaskView: function() {
             this.addTaskViewVisible = !this.addTaskViewVisible
         },
-        toggleTaskStatus: function() {
-            this.addTaskViewVisible = !this.addTaskViewVisible
+        toggleTaskStatus: function(id) {
+            let task = this.taskList.filter( row => id == row.id )
+            task[0].is_done = !task[0].is_done
+            this.updateTask(task[0].id, task[0].name, task[0].is_done, task[0].due)
         },
         doFilter: function(keyword) {
             this.filterkey = keyword;
