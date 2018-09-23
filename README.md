@@ -19,11 +19,11 @@
     - [ ] batch requests
     - [ ] improve performance
     - [ ] handle api errors
-- [ ] internal api
+- [x] internal api
     - [x] read task
     - [x] create task
     - [x] update task
-    - [ ] delete task
+    - [x] delete task
 - [ ] user authentication for my own app
 - [ ] make drawer for todo memorandom
 - [ ] drug and drop
