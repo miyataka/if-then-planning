@@ -15,6 +15,14 @@ class Api::V1::EventController < ApplicationController
         render 'show', status: :created
     end
 
+    def update
+        # TODO
+    end
+
+    def destroy
+        # TODO
+    end
+
     private
         def params_create_event
             params.fetch(:event, {}).permit(

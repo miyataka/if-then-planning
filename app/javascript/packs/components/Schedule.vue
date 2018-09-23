@@ -6,9 +6,25 @@
                 <md-button class="md-fab md-mini md-primary" @click="fetchEvents">
                     <md-icon>refresh</md-icon>
                 </md-button>
-                <md-button type="submit" @click="createEvent" class="md-accent md-fab md-mini">
+                <md-button @click="toggleAddEventView" class="md-accent md-fab md-mini">
                     <md-icon>add</md-icon>
                 </md-button>
+                <div class="addEventView" v-show="addEventViewVisible">
+                    <form>
+                        <input type="text"
+                               v-model="eventSummary"
+                               placeholder="event summary..." />
+                        <datepicker type="text"
+                                    v-model="eventStart"
+                                    placeholder="when event starts..."
+                                    format="yyyy-MM-dd"
+                                    ></datepicker>
+                        <md-button class="md-mini md-icon-button md-raised md-primary"
+                            @click="createEvent">
+                            <md-icon>edit</md-icon>
+                        </md-button>
+                    </form>
+                </div>
             </b-col>
         </b-row>
         <div id="schedule-body">
@@ -33,16 +49,21 @@
 
 <script>
 import axios from 'axios'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
     name: 'schedule',
     data () {
         return {
+            addEventViewVisible: false,
             eventList: [],
             eventSummary: '',
             eventStart: '',
             eventEnd: '',
         }
+    },
+    components: {
+        Datepicker
     },
     methods: {
         fetchEvents: function() {
@@ -62,12 +83,25 @@ export default {
                 }, (error) => {
                         console.log(error);
                 });
-        }
+        },
+        toggleAddEventView: function() {
+            this.addEventViewVisible = !this.addEventViewVisible
+        },
     },
     mounted: function() {
         this.fetchEvents();
     },
     computed: {
+        today_ymd: function() {
+            let now = new Date();
+            let y = now.getFullYear();
+            let m = now.getMonth();
+            let d = now.getDate();
+            if (m < 10) {
+                m = '0' + m;
+            }
+            return y + '-' + m + '-' + d
+        },
         todayEvents: function() {
             let today = new Date;
             let ymd = today.toISOString().substr(0,10);
@@ -87,13 +121,21 @@ export default {
         },
         todayEventsList: function () {
             let te = this.todayEvents;
+            let ymd = this.today_ymd;
             let te_list = new Array(24);
             let te_list2 = new Map();
+            let te_list3 = new Array();
+            let _top
             let style_string = 'width: 90%; ' +
                                'z-index: 1; ' +
                                'background-color: red; ' +
                                'height: 90%; ' +
                                '';
+            let AllDayEvent_style_string = 'width: 90%; ' +
+                                    'z-index: 1; ' +
+                                    'background-color: red; ' +
+                                    'height: 90%; ' +
+                                    '';
             let span_style_string = 'color: white; ' +
                                     'background: inherit; ' +
                                     'left: 3px; ' +
@@ -104,26 +146,30 @@ export default {
             })
 
             te_list.forEach(function(obj) {
-                te_list2.set(obj.start.date_time.substring(11,13),
-                             style_string + "top: " + (obj.start.date_time.substring(11,13) * 40) + 'px;');
-                te_list2.set(obj.start.date_time.substring(11,13) + "_task",
-                             obj.summary);
-                te_list2.set(obj.start.date_time.substring(11,13) + "_task_style",
-                             span_style_string);
+                if("date_time" in obj.start) {
+                    te_list2.set(obj.start.date_time.substring(11,13),
+                                 style_string + "top: " + (obj.start.date_time.substring(11,13) * 40) + 'px;');
+                    te_list2.set(obj.start.date_time.substring(11,13) + "_task",
+                                 obj.summary);
+                    te_list2.set(obj.start.date_time.substring(11,13) + "_task_style",
+                                 span_style_string);
+                } else if("date" in obj.start){
+                    te_list3.push(obj.summary)
+                    te_list2.set(ymd + "_task",
+                                 te_list3);
+                    if(te_list3.length > 0){
+                        _top = te_list3.length * 18 + 'px; '
+                    }
+                    te_list2.set(ymd + "_task_style",
+                                 AllDayEvent_style_string + _top);
+                } else {
+                    //do nothing
+                    console.log("do nothing")
+                }
             })
 
             return te_list2;
         },
-        today_ymd: function() {
-            let now = new Date();
-            let y = now.getFullYear();
-            let m = now.getMonth();
-            let d = now.getDate();
-            if (m < 10) {
-                m = '0' + m;
-            }
-            return y + '-' + m + '-' + d
-        }
     },
 }
 </script>
@@ -167,4 +213,14 @@ div#schedule-header {
     border: 0.5px solid #e0e0e0;
     border-bottom: 0px;
 }
+div.addEventView {
+    display: inline-flex;
+    width: auto;
+    border: #e3e3e3 1px solid;
+    position: relative;
+    z-index: 3;
+    background: white;
+    color: black;
+}
+
 </style>
