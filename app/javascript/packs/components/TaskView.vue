@@ -38,7 +38,12 @@
                 <div class="addTaskView" v-show="addTaskViewVisible">
                     <form>
                         <input type="text" v-model="addTaskName" placeholder="taskname..." />
-                        <input type="text" v-model="addTaskDue" placeholder="taskdue..." />
+                        <datepicker type="text"
+                                    class="addTaskDue"
+                                    v-model="addTaskDue"
+                                    placeholder="taskdue..."
+                                    calendar-class="my_calendar"
+                                    format="yyyy-MM-dd"></datepicker>
                         <md-button class="md-mini md-icon-button md-raised md-primary"
                             @click="createTask">
                             <md-icon>edit</md-icon>
@@ -64,11 +69,14 @@
                 <span class="cal_icon">
                     <md-icon class="text-primary">calendar_today</md-icon>
                 </span>
-                <input type="text"
+                <datepicker type="text"
                        class="due"
                        placeholder="due!!"
                        style="height: 1.5em; width: 100%;"
-                       v-model="task.due"/>
+                       format="yyyy-MM-dd"
+                       calendar-class="my_calendar"
+                       v-model="task.due"
+                       @closed="updateTask(task.id, task.name, task.is_done, task.due)"></datepicker>
             </b-col>
         </b-row>
         </div>
@@ -77,6 +85,7 @@
 
 <script>
 import axios from 'axios'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
     name: 'TaskView',
@@ -89,6 +98,9 @@ export default {
             addTaskDue: '',
             filterkey: '',
         }
+    },
+    components: {
+        Datepicker
     },
     methods: {
         fetchTasks: function() {
@@ -199,5 +211,18 @@ div.addTaskView {
     z-index: 3;
     background: white;
     color: black;
+}
+
+.due {
+    display: baseline;
+}
+.due >>> .my_calendar {
+    position: relative;
+    right: 200px;
+}
+.addTaskDue >>> .my_calendar {
+    font-size: 15px;
+    position: relative;
+    right: 100px;
 }
 </style>
