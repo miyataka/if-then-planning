@@ -36,17 +36,16 @@ class Api::V1::TasksController < ApplicationController
 
     # DELETE /api/v1/tasks/[:id]
     def destroy
-        # TODO
+        @task = Task.find_by(id: params[:id])
+
+        if @task.destroy
+        else
+            render json: @task.error, status: :unprocessable_entity
+        end
     end
 
     private
         def task_params
-            params.fetch(:task, {}).permit(
-                :id, :name, :calendar_id, :order, :event_id, :due, :is_done
-            )
-        end
-
-        def update_params
             params.fetch(:task, {}).permit(
                 :id, :name, :calendar_id, :order, :event_id, :due, :is_done
             )

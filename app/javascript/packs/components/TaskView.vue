@@ -63,7 +63,8 @@
                        placeholder="task_name!"
                        style="overflow: hidden; resize: none; height: 1.5em; width: 100%; vertical-align: baseline;"
                        v-model="task.name"
-                       @change="updateTask(task.id, task.name, task.is_done, task.due)" />
+                       @keyup.ctrl.shift.delete.exact="deleteTask(task.id)"
+                       @change="updateTask(task.id, task.name, task.is_done, task.due)"/>
             </b-col>
             <b-col class="due-col" cols="3">
                 <span class="cal_icon">
@@ -146,6 +147,19 @@ export default {
                     console.log(error);
                 });
         },
+        deleteTask: function(id) {
+            let url = '/api/v1/tasks/' + id
+            //console.log(task)
+            axios.delete(url)
+                .then(() => {
+                    // remove task local taskList
+                    this.taskList = this.taskList.filter(function(row) {
+                                   return id !== row.id
+                               });
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         toggleAddTaskView: function() {
             this.addTaskViewVisible = !this.addTaskViewVisible
         },
@@ -159,9 +173,6 @@ export default {
         },
         computedTaskId: function(id) {
             return "task-" + id
-        },
-        syncTaskList: function() {
-
         },
     },
     mounted: function() {
