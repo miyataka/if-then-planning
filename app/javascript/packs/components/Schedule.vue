@@ -65,7 +65,7 @@ import axios from 'axios'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
-    name: 'schedule',
+    name: 'ScheduleView',
     data () {
         return {
             addEventViewVisible: false,
