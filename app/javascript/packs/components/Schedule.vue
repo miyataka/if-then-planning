@@ -18,7 +18,7 @@
                                     v-model="eventStart"
                                     placeholder="when event starts..."
                                     format="yyyy-MM-dd"
-                                    ></datepicker>
+                                    @closed="createEvent"></datepicker>
                         <md-button class="md-mini md-icon-button md-raised md-primary"
                             @click="createEvent">
                             <md-icon>edit</md-icon>
@@ -28,18 +28,31 @@
             </b-col>
         </b-row>
         <div id="schedule-body">
-            <b-row class="hour scale" v-for="hour in 24">
+            <b-row class="hour scale" v-for="hour in 24" :key="hour">
                 <div class="time-label">
                     <span>{{ (hour - 1) > 9 ? (hour - 1) : "0" + (hour - 1)}}{{ ":00" }}</span>
                 </div>
                 <div class="time-block">
                     <div class="event md-accent"
                          v-if="todayEventsList.get(String(hour - 1))"
-                         v-bind:style="todayEventsList.get(String(hour - 1))">
-                        <span v-if="todayEventsList.get(String(hour - 1) + '_task')"
+                         v-bind:style="todayEventsList.get(String(hour - 1))"
+                         @click="toggleEventDetailView">
+                        <span class="event_summary" v-if="todayEventsList.get(String(hour - 1) + '_task')"
                               v-bind:style="todayEventsList.get(String(hour - 1) + '_task_style')">
                             {{ todayEventsList.get(String(hour - 1) + '_task') }}
                         </span>
+                        <div class="event_detail"
+                             :class="{ open: eventDetailViewVisible }"
+                             v-if="eventDetailViewVisible">
+                            <div class="event_description">
+                                <span>some description</span>
+                            </div>
+                            <div class="eventActionBar">
+                                <md-button class="md-small md-icon-button">
+                                    <md-icon>delete</md-icon>
+                                </md-button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </b-row>
@@ -60,6 +73,7 @@ export default {
             eventSummary: '',
             eventStart: '',
             eventEnd: '',
+            eventDetailViewVisible: false,
         }
     },
     components: {
@@ -77,6 +91,7 @@ export default {
                 });
         },
         createEvent: function() {
+            if(this.eventSummary) return;
             axios.post('/api/v1/event', { event: { summary: this.eventSummary, start: this.eventStart, end: this.eventEnd }})
                 .then((response) => {
                         console.log(response.data);
@@ -84,8 +99,26 @@ export default {
                         console.log(error);
                 });
         },
+        deleteEvent: function() {
+            let url = '/api/v1/event/' + id
+            let calendar_id = 'primary' // fixed value, now.
+            axios.delete(url, {
+                params: {
+                    event_id: event_id,
+                    calendar_id: calendar_id,
+                }
+            })
+                .then(() => {
+                    // remove event local eventList
+                }, (error) => {
+                    console.log(error);
+                });
+        },
         toggleAddEventView: function() {
             this.addEventViewVisible = !this.addEventViewVisible
+        },
+        toggleEventDetailView: function() {
+            this.eventDetailViewVisible = !this.eventDetailViewVisible
         },
     },
     mounted: function() {
@@ -95,12 +128,12 @@ export default {
         today_ymd: function() {
             let now = new Date();
             let y = now.getFullYear();
-            let m = now.getMonth();
+            let m = now.getMonth() + 1;
             let d = now.getDate();
             if (m < 10) {
                 m = '0' + m;
             }
-            return y + '-' + m + '-' + d
+            return y + '-' + m + '-' + d;
         },
         todayEvents: function() {
             let today = new Date;
@@ -122,7 +155,6 @@ export default {
         todayEventsList: function () {
             let te = this.todayEvents;
             let ymd = this.today_ymd;
-            let te_list = new Array(24);
             let te_list2 = new Map();
             let te_list3 = new Array();
             let _top
@@ -132,20 +164,16 @@ export default {
                                'height: 90%; ' +
                                '';
             let AllDayEvent_style_string = 'width: 90%; ' +
-                                    'z-index: 1; ' +
-                                    'background-color: red; ' +
-                                    'height: 90%; ' +
-                                    '';
+                                           'z-index: 1; ' +
+                                           'background-color: red; ' +
+                                           'height: 90%; ' +
+                                           '';
             let span_style_string = 'color: white; ' +
                                     'background: inherit; ' +
                                     'left: 3px; ' +
                                     'top: auto;' ;
 
-            te_list = te.slice().sort(function(a, b) {
-                return (a.start.date_time == b.start.date_time ? 0 : a.start.date_time > b.start.date_time ? 1 : -1)
-            })
-
-            te_list.forEach(function(obj) {
+            te.forEach(function(obj) {
                 if("date_time" in obj.start) {
                     te_list2.set(obj.start.date_time.substring(11,13),
                                  style_string + "top: " + (obj.start.date_time.substring(11,13) * 40) + 'px;');
@@ -223,4 +251,35 @@ div.addEventView {
     color: black;
 }
 
+.time-block .event_summary {
+    display: inline-block;
+}
+.time-block .eventActionBar {
+    display: inline-block;
+    text-align: right;
+}
+.time-block .event_detail.open {
+    display: block;
+    position: relative;
+        /*
+    top: -100px;
+    left: 100px;
+        */
+    z-index: 5;
+    height: auto;
+    width: 100%;
+    background: white;
+    color: red;
+    border: red 1px solid;
+}
+
+.event_description > span {
+    display: block;
+    position: relative;
+    top: auto;
+    background: #fff;
+}
+.event_description > div {
+    display: block;
+}
 </style>

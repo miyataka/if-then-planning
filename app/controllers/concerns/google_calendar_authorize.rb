@@ -80,4 +80,26 @@ module GoogleCalendarAuthorize
 
         @service.insert_event(calendar_id, event)
     end
+
+    def deleteEvent( args )
+        return if( args.nil? || args[:calendar_id].nil? || args[:event_id].nil? )
+
+        _calendar_id = args[:calendar_id]
+        _event_id = args[:event_id]
+
+        # pre-delete existance check
+        result = getEvent(_calendar_id, _event_id)
+
+        if( result.body.empty? )
+            # TODO error handle
+            return
+        end
+
+        @service.delete_event(_calendar_id, _event_id)
+    end
+
+    private
+        def getEvent(calendar_id, event_id)
+            @service.get_event(calendar_id, event_id)
+        end
 end

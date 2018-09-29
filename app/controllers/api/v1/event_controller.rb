@@ -20,13 +20,26 @@ class Api::V1::EventController < ApplicationController
     end
 
     def destroy
-        # TODO
+        @event = deleteEvent( params_event_specify )
+
+        if @event.empty?
+            # what is return?
+            render json: @event.error, status: :unprocessable_entity
+        else
+            head :no_content
+        end
     end
 
     private
         def params_create_event
             params.fetch(:event, {}).permit(
                 :summary, :start, :end
+            )
+        end
+
+        def params_event_specify
+            params.permit(
+                :calender_id, :event_id
             )
         end
 end
