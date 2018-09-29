@@ -53,7 +53,7 @@
             </b-col>
         </b-row>
         <div id="taskview-body">
-        <b-row :id="computedTaskId(task.id)" v-for="task in filteredTask" style="vertical-align: middle;">
+        <b-row :id="computedTaskId(task.id)" v-for="task in filteredTask" :key="task.id" style="vertical-align: middle;">
             <b-col cols="1" style="align-items: center;" v-model="task.is_done" @click="toggleTaskStatus(task.id)">
                 <md-icon class="text-primary" v-if="!task.is_done">check_box_outline_blank</md-icon>
                 <md-icon class="text-primary" v-else>check_box</md-icon>
