@@ -39,6 +39,7 @@ class Api::V1::TasksController < ApplicationController
         @task = Task.find_by(id: params[:id])
 
         if @task.destroy
+            head :no_content
         else
             render json: @task.error, status: :unprocessable_entity
         end
