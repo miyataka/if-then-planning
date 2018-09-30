@@ -7,7 +7,7 @@
     - [x] task-view
     - [ ] trigger-view
     - [ ] obstacle-view
-- [ ] google calendar integration
+- [ ] external api (google calendar integration)
     - [x] create event
     - [ ] reminder and notifications
     - [ ] recurring event
@@ -32,3 +32,7 @@
         - when you make todo, if(when, where) is required.
     - obstacle-base if-then-planning
         - when you make todo, if(any obstacle occur...) is required.
+- [ ] using redis
+    - [ ] install
+    - [ ] start up
+    - [ ] using as cache-server
