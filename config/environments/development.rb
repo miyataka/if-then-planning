@@ -64,4 +64,6 @@ Rails.application.configure do
   # for temporay setting TODO remove this.
   # Disable request forgery protection in development environment.
   config.action_controller.allow_forgery_protection = false
+  # redis config add for if-then-planning
+  ENV["REDIS"] = "localhost:6379"
 end
