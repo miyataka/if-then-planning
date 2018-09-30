@@ -20,7 +20,7 @@ class Api::V1::EventController < ApplicationController
     end
 
     def destroy
-        @event = deleteEvent( params_event_specify )
+        @event = deleteEvent(params_event_specify)
 
         if @event.empty?
             # what is return?
