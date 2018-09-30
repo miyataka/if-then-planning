@@ -1,3 +1,8 @@
 #!/bin/bash -i
 bundle install
+
+redis-server &
+REDIS_PID=$!
+trap "sleep 3s; rm -f ./dump.rdb" 1 2 3 15
+
 bundle exec foreman start -f Procfile.dev
