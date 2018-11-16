@@ -38,6 +38,8 @@
 yarn-debug.log*
 .yarn-integrity
 
+/vendor/bundle
+
 # Ignore credentials
 *secret.json
 *credentials.json
