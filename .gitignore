@@ -51,3 +51,8 @@ yarn-debug.log*
 GPATH
 GRTAGS
 GTAGS
+
+/vender/bundle
+/vender/bundle/**/*
+/vender/bundle/
+
